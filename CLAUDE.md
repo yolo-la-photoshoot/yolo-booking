@@ -38,6 +38,11 @@ Package/pricing data lives in the `PACKAGES` constant (`portrait` and `wedding` 
 
 Time slots are a fixed `TIME_SLOTS` array; slot duration labels and availability depend on the selected package's `duration` (`'1hr' | '3hr' | '8hr' | '24hr'`), handled inline in `renderTimeslots()`.
 
+### 4. Portfolio (page-turning viewer)
+The hero section's static photo collage was replaced by an interactive "摄影作品集" (photography portfolio) book viewer, implemented as a second, self-contained `<script>` block wrapped in an IIFE and appended after the main script. It is a near-verbatim port of a standalone page-flip component (curled-page 3D transform, draggable magnifying loupe, zoom controls, an auto-playing "riffle" intro animation, and a `.pf-plate-list` index) adapted to reuse the site's existing color tokens and to cycle through the only two photo assets in the repo (`photo1.jpg`/`photo2.jpg`) as placeholders — swap the `PAGES` array's `file` entries for real photography once available.
+
+It is deliberately isolated from the booking script to avoid identifier collisions between two classic (non-module) `<script>` blocks, which share one global scope — but it still needs to *read* state from the first script: `curLang()` references the booking script's top-level `const i18n` directly by name (not `window.i18n`, since top-level `const`/`let` never attach to `window`, only `var` and function declarations do). Static portfolio copy (kicker, hint, divider label) goes through the normal `data-i18n` system; the dynamically-generated bits (page captions, plate-list titles) are refreshed on language switch via `window.pfOnLangChange()`, called from the language button's click handler in the first script.
+
 ### External integrations (all client-side, no backend)
 - **Booking submission** — `sendEmail()` POSTs the booking as JSON to Formspree (`FORMSPREE_ID = 'xdabeewd'`, hardcoded). If it fails, the success view still shows but reveals `#email-fallback-notice` telling the customer to contact the photographer directly.
 - **Address recognition** — `geocodeAddress()` tries Nominatim (`nominatim.openstreetmap.org`) first, then falls back to Photon (`photon.komoot.io`), to show a "recognized" hint under the location field. Results are memoized in `geocodeCache`.
