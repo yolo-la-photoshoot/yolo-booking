@@ -1,0 +1,103 @@
+{
+  "_comment": "小红书（XHS）TikHub 端点池配置。App V2 为默认首选；只保留已验证可用的 Web V3 备用端点。",
+  "platform": "xhs",
+  "version": "2.1",
+  "last_updated": "2026-09-19",
+  "_priority_note": "App V2 每次请求自带一次重试。仅博主资料和视频详情在 App V2 临时失败时降级到已实测可用的 Web V3；其余旧 app、web_v2 和失效的 web_v3 端点不再调用。",
+
+  "pools": {
+    "search_notes": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/search_notes",
+        "method": "GET",
+        "params": {"keyword": "${keyword}", "page": "${page}"},
+        "adapter": "search_notes_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      }
+    ],
+
+    "search_users": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/search_users",
+        "method": "GET",
+        "params": {"keyword": "${keyword}", "page": "${page}"},
+        "adapter": "search_users_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      }
+    ],
+
+    "fetch_user_info": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/get_user_info",
+        "method": "GET",
+        "params": {"user_id": "${user_id}"},
+        "adapter": "user_info_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      },
+      {
+        "group": "web_v3",
+        "path": "/api/v1/xiaohongshu/web_v3/fetch_user_info",
+        "method": "GET",
+        "params": {"user_id": "${user_id}"},
+        "adapter": "user_info_web_v3",
+        "_note": "App V2 临时失败时的已验证备用端点"
+      }
+    ],
+
+    "fetch_user_notes": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/get_user_posted_notes",
+        "method": "GET",
+        "params": {"user_id": "${user_id}", "cursor": "${cursor}"},
+        "adapter": "user_notes_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      }
+    ],
+
+    "fetch_note_detail_image": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/get_image_note_detail",
+        "method": "GET",
+        "params": {"note_id": "${note_id}"},
+        "adapter": "note_detail_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      }
+    ],
+
+    "fetch_note_detail_video": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/get_video_note_detail",
+        "method": "GET",
+        "params": {"note_id": "${note_id}"},
+        "adapter": "note_detail_app_v2",
+        "_note": "默认首选；包含视频流及可能存在的平台字幕"
+      },
+      {
+        "group": "web_v3",
+        "path": "/api/v1/xiaohongshu/web_v3/fetch_note_detail",
+        "method": "GET",
+        "params": {"note_id": "${note_id}", "xsec_token": "${xsec_token}"},
+        "required_args": ["xsec_token"],
+        "adapter": "note_detail_web_v3",
+        "_note": "仅当 App V2 临时失败且有 xsec_token 时获取视频地址，供 Whisper 兜底"
+      }
+    ],
+
+    "fetch_note_comments": [
+      {
+        "group": "app_v2",
+        "path": "/api/v1/xiaohongshu/app_v2/get_note_comments",
+        "method": "GET",
+        "params": {"note_id": "${note_id}", "cursor": "${cursor}"},
+        "adapter": "note_comments_app_v2",
+        "_note": "默认首选，2026-09-19 实测可用"
+      }
+    ]
+  }
+}
