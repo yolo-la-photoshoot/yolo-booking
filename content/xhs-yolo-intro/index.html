@@ -796,35 +796,86 @@
     .pkg li::before { content: ''; position: absolute; left: 0; top: 18px; width: 14px; height: 2px; background: var(--accent); }
     .pkg.featured .p-name::after { content: '最多人选'; font-family: var(--sans-zh); font-size: 20px; letter-spacing: .1em; color: var(--paper); background: var(--accent); padding: 4px 12px; margin-left: 16px; vertical-align: middle; }
     .note-strip { margin-top: 28px; padding: 22px 28px; background: var(--paper-2); border-left: 3px solid var(--accent); font-family: var(--serif-zh); font-size: 24px; line-height: 1.6; color: rgba(var(--ink-rgb), .82); }
+
+    /* ---------- Task-scoped: image-led cover + portfolio walls ---------- */
+    .bleed { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
+    .cover-title { position:absolute; left:80px; top:88px; z-index:3; color:#f6f1e6; }
+    .cover-title .kicker { color:rgba(246,241,230,.82); margin-bottom:22px; }
+    .cover-title h1 { font-family:var(--serif-zh); font-weight:500; font-size:92px; line-height:1.12; letter-spacing:.04em; margin:0; text-shadow:0 2px 18px rgba(10,30,60,.25); }
+    .cover-title .sub { font-family:var(--serif-en); font-style:italic; font-size:32px; margin-top:22px; color:rgba(246,241,230,.9); }
+    .cover-band { position:absolute; left:0; right:0; bottom:0; z-index:3; background:var(--paper); display:flex; align-items:center; padding:30px 80px 34px; gap:0; }
+    .cover-band > div { flex:1; text-align:center; border-right:1px solid var(--line); }
+    .cover-band > div:last-child { border-right:0; }
+    .cover-band .t-big { font-family:var(--serif-zh); font-size:40px; font-weight:500; color:var(--ink); }
+    .cover-band .t-sm { font-family:var(--mono); font-size:18px; letter-spacing:.14em; color:var(--muted); margin-top:6px; text-transform:uppercase; }
+    .wall { display:grid; gap:16px; flex:1; min-height:0; }
+    .wall figure { margin:0; overflow:hidden; background:var(--paper-2); }
+    .wall img { width:100%; height:100%; object-fit:cover; display:block; }
+    .wall-2x2 { grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; }
+    .wall-1-2 { grid-template-columns:1.25fr 1fr; grid-template-rows:1fr 1fr; }
+    .wall-1-2 figure:first-child { grid-row:1 / span 2; }
+    .wall-cap { display:flex; justify-content:space-between; margin-top:20px; font-family:var(--serif-zh); font-size:26px; color:rgba(var(--ink-rgb),.8); }
   </style>
   <main class="sheet">
 
-    <!-- ===== 01 Cover · M01 Magazine Issue Cover =====
-         Subject map (photographer-1.jpg, 800x999 illustration): face x 30-58%, y 12-40%;
-         camera bottom-left y 70-92%. Crop keeps face + camera, object-position center 38%. -->
+    <!-- ===== 01 Cover · M16 Image-Led Cover =====
+         Subject map (sea-05.jpg, 780x1040): headscarf + face x 42-75%, y 9-33%; back/shoulder y 33-75%;
+         safe quiet zone = open ocean top-left x 0-40%, y 3-30% (uniform deep blue -> cream text, no mask).
+         Bottom solid paper band covers fence/sign area. object-position center 40%. -->
     <section class="poster xhs" id="xhs-01">
+      <img class="bleed" src="assets/sea-05.jpg" alt="海边约拍样片" style="object-position:center 40%">
+      <div class="cover-title">
+        <p class="kicker">LA 同城约拍 · yolo</p>
+        <h1>在洛杉矶<br>拍一组<br>松弛感</h1>
+        <p class="sub" style="font-family:var(--serif-zh);font-style:normal">不用摆，也很好看</p>
+      </div>
+      <div class="cover-band">
+        <div><div class="t-big">富士直出</div><div class="t-sm">Fujifilm X-T5</div></div>
+        <div><div class="t-big">底片全送</div><div class="t-sm">All RAW incl.</div></div>
+        <div><div class="t-big">$99 起</div><div class="t-sm">1hr · Solo</div></div>
+      </div>
+    </section>
+
+    <!-- ===== 02 Portfolio · seaside · M06 Evidence Wall 2x2 =====
+         object-position chosen per photo so faces stay in frame. -->
+    <section class="poster xhs" id="xhs-02">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
-        <div class="issue-row"><span>LA 同城约拍</span><span class="dot"></span><span>yolo · Vol.01</span></div>
-        <p class="kicker" style="margin-top:56px">Los Angeles · Portrait</p>
-        <h1 class="h-display" style="font-size:118px;margin-bottom:32px">在洛杉矶<br>拍一组<span class="accent">松弛感</span><br>人像</h1>
-        <p class="h-sub" style="margin-bottom:36px">Capture the moment, not the pose.</p>
-        <figure class="frame-img hero-photo" style="height:520px">
-          <img src="assets/photographer-1.jpg" alt="摄影师 Nicklaus 插画" style="object-position:center 12%">
-        </figure>
-        <div class="tag-row" style="margin-top:36px">
-          <div><div class="t-big">富士直出</div><div class="t-sm">Fujifilm X-T5</div></div>
-          <div><div class="t-big">底片全送</div><div class="t-sm">All RAW incl.</div></div>
-          <div><div class="t-big">$99 起</div><div class="t-sm">1hr · Solo</div></div>
+        <div class="issue-row"><span>作品 · Portfolio</span><span class="dot"></span><span>海边悬崖</span></div>
+        <h2 class="h-xl" style="margin-top:48px;margin-bottom:36px">风很大的<span class="accent">海边</span></h2>
+        <div class="wall wall-2x2">
+          <figure><img src="assets/sea-01.jpg" alt="" style="object-position:center 30%"></figure>
+          <figure><img src="assets/sea-02.jpg" alt="" style="object-position:center 30%"></figure>
+          <figure><img src="assets/sea-06.jpg" alt="" style="object-position:center 25%"></figure>
+          <figure><img src="assets/sea-03.jpg" alt="" style="object-position:center 55%"></figure>
         </div>
-        <div class="foot"><span>yolo ✦ Nicklaus</span><span>01 / 06</span></div>
+        <div class="wall-cap"><span>黑色吊带裙 · 丝巾 · 正午的蓝</span><span class="accent">Seaside</span></div>
+        <div class="foot" style="margin-top:28px"><span>yolo ✦ Portfolio</span><span>02 / 08</span></div>
+      </div>
+    </section>
+
+    <!-- ===== 03 Portfolio · desert · M06 one-large + two =====
+         desert-03: face x 50-60%, y 30-42%; desert-02: face x 45-55%, y 35-45%; desert-01: face y 30-48%. -->
+    <section class="poster xhs" id="xhs-03">
+      <canvas class="mag-bg" data-bg="ink-flow"></canvas>
+      <div class="grain"></div>
+      <div class="content stack">
+        <div class="issue-row"><span>作品 · Portfolio</span><span class="dot"></span><span>沙漠日落</span></div>
+        <h2 class="h-xl" style="margin-top:48px;margin-bottom:36px">日落前的<span class="accent">沙漠</span></h2>
+        <div class="wall wall-1-2">
+          <figure><img src="assets/desert-03.jpg" alt="" style="object-position:center 45%"></figure>
+          <figure><img src="assets/desert-02.jpg" alt="" style="object-position:center 42%"></figure>
+          <figure><img src="assets/desert-01.jpg" alt="" style="object-position:center 42%"></figure>
+        </div>
+        <div class="wall-cap"><span>越野车 · 牛仔帽 · 金色逆光</span><span class="accent">Desert</span></div>
+        <div class="foot" style="margin-top:28px"><span>yolo ✦ Portfolio</span><span>03 / 08</span></div>
       </div>
     </section>
 
     <!-- ===== 02 About · M03 Essay Split with photo well =====
          Subject map (photographer-2.jpg, 700x1045): face x 32-62%, y 10-32%. Tall well, object-position center 30%. -->
-    <section class="poster xhs" id="xhs-02">
+    <section class="poster xhs" id="xhs-04">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
@@ -842,12 +893,12 @@
             <p class="label" style="margin-top:auto">Natural · Vintage · Fresh</p>
           </div>
         </div>
-        <div class="foot" style="margin-top:44px"><span>yolo ✦ Capture The Moment</span><span>02 / 06</span></div>
+        <div class="foot" style="margin-top:44px"><span>yolo ✦ Capture The Moment</span><span>04 / 08</span></div>
       </div>
     </section>
 
     <!-- ===== 03 Style & gear · M08 Tall Ledger ===== -->
-    <section class="poster xhs" id="xhs-03">
+    <section class="poster xhs" id="xhs-05">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
@@ -873,12 +924,12 @@
           </div>
         </div>
         <div class="callout" style="margin-top:44px">拍出来的不是“网红模板”，<br>是你本来的样子。</div>
-        <div class="foot"><span>yolo ✦ Naturally Cinematic</span><span>03 / 06</span></div>
+        <div class="foot"><span>yolo ✦ Naturally Cinematic</span><span>05 / 08</span></div>
       </div>
     </section>
 
     <!-- ===== 04 Portrait packages · M08 ledger with prices ===== -->
-    <section class="poster xhs" id="xhs-04">
+    <section class="poster xhs" id="xhs-06">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
@@ -901,12 +952,12 @@
             <ul><li>120 张精修 + 3 分钟微电影</li><li>LA 全城任选 · 赠精装手工相册</li><li>美甲 / 花束 / 男士剪发 三选一</li></ul>
           </div>
         </div>
-        <div class="foot"><span>前两档不含车费</span><span>04 / 06</span></div>
+        <div class="foot"><span>前两档不含车费</span><span>06 / 08</span></div>
       </div>
     </section>
 
     <!-- ===== 05 Wedding packages · same ledger, different header rhythm ===== -->
-    <section class="poster xhs" id="xhs-05">
+    <section class="poster xhs" id="xhs-07">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
@@ -930,12 +981,12 @@
             <ul><li>150 张精修 + 3 分钟微电影</li><li>婚前一晚起纪实记录 · 赠精装相册</li><li>美甲 + 修眉 + 花束 + 男士剪发 全含</li></ul>
           </div>
         </div>
-        <div class="foot"><span>前两档不含车费</span><span>05 / 06</span></div>
+        <div class="foot"><span>前两档不含车费</span><span>07 / 08</span></div>
       </div>
     </section>
 
     <!-- ===== 06 How to book · M14 Vertical Pipeline + M07 closing ===== -->
-    <section class="poster xhs" id="xhs-06">
+    <section class="poster xhs" id="xhs-08">
       <canvas class="mag-bg" data-bg="ink-flow"></canvas>
       <div class="grain"></div>
       <div class="content stack">
@@ -948,7 +999,7 @@
         </div>
         <div class="note-strip">拍完约 7 天精修完毕 · 取消预约请提前一周<br>前两档套餐不含车费</div>
         <p class="pullquote" style="font-size:52px;margin-top:56px">评论区扣「约拍」<br>我把档期表发你 <span class="accent">✦</span></p>
-        <div class="foot"><span>yolo ✦ see you in LA</span><span>06 / 06</span></div>
+        <div class="foot"><span>yolo ✦ see you in LA</span><span>08 / 08</span></div>
       </div>
     </section>
 
