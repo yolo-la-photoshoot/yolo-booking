@@ -1,0 +1,34 @@
+
+  </main>
+
+  <!-- Magazine WebGL background (deterministic ink-flow) -->
+  <script src="assets/magazine-bg-webgl.js"></script>
+  <script>
+    (function () {
+      function cssVarRgb(name, fallback) {
+        var raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+        if (!raw) return fallback;
+        var parts = raw.split(',').map(function (x) { return parseInt(x.trim(), 10); });
+        return parts.length === 3 && parts.every(function (n) { return !isNaN(n); }) ? parts : fallback;
+      }
+      function mountAll() {
+        if (!window.MagazineBg || !window.MagazineBg.mount) return;
+        var ink    = cssVarRgb('--ink-rgb',    [10, 10, 11]);
+        var paper  = cssVarRgb('--paper-rgb',  [243, 240, 232]);
+        var accent = cssVarRgb('--accent-rgb', [17, 17, 17]);
+        document.querySelectorAll('canvas.mag-bg').forEach(function (c) {
+          window.MagazineBg.mount(c, {
+            ink: ink,
+            paper: paper,
+            accent: accent,
+            strength: 0.32,
+            frozenTime: 12.5
+          });
+        });
+      }
+      if (document.readyState === 'complete') mountAll();
+      else window.addEventListener('load', mountAll);
+    })();
+  </script>
+</body>
+</html>
